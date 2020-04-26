@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from './types'
-
-function axios(config: AxiosRequestConfig) {
-  // TODO
+import xhr from './xhr'
+function axios(config: AxiosRequestConfig): void {
+  xhr(config)
 }
 
 export default axios
