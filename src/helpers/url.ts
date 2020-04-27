@@ -1,4 +1,4 @@
-import { isDate, isObject } from './utils'
+import { isDate, isPlainObject } from './utils'
 
 // 为何不直接调用window.encodeURIComponent，因为这里对特殊字符做处理
 function encode(val: string): string {
@@ -36,7 +36,7 @@ export function buildURL(url: string, params?: any): string {
       if (isDate(val)) {
         // toISOString 本来是不会提示出来的，所以utils.ts中使用类型谓词
         val = val.toISOString
-      } else if (isObject(val)) {
+      } else if (isPlainObject(val)) {
         val = JSON.stringify(val)
       }
       parts.push(`${encode(key)}=${encode(val)}`) // 光这么做不够，还要encode
