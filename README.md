@@ -35,3 +35,14 @@ axios({}).then(res => { console.log(res) })
 # 处理响应data
 如果没设置 responseType 的时候，默认为空，返回的是字符串，当服务端返回给我们的数据是字符串类型，我们可以尝试把他转换为JSON对象
 方便以后使用
+
+# 错误处理
+axios({
+  method: 'get',
+  url: '/error/get'
+}).then(res => {
+  console.log(res)
+}).catch(e => {
+  // 主要在这里处理异常
+  console.log(e)
+})
