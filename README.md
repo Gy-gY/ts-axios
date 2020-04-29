@@ -46,3 +46,7 @@ axios({
   // 主要在这里处理异常
   console.log(e)
 })
+
+## 更详细的错误信息
+我们希望对外提供的信息不仅仅包括错误文本信息，还包括请求对象配置 config，错误代码 code， XMLHTTPRequest 对象实例
+request 以及自定义响应对象 response
