@@ -1,4 +1,4 @@
-import axios from '../../src/index';
+import axios, { AxiosError } from '../../src/index';
 
 // 下面是测试config.params
 axios({
@@ -126,4 +126,7 @@ axios({
 }).then(res => {
   // 返回的res里面的data是字符串类型 data: {a: 3, b: 4},因为设置了responseType: 'json',
   console.log(res)
+}).catch((e: AxiosError) => {
+  console.log(e.message)
+  console.log(e.config)
 })

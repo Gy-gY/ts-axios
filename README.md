@@ -50,3 +50,21 @@ axios({
 ## 更详细的错误信息
 我们希望对外提供的信息不仅仅包括错误文本信息，还包括请求对象配置 config，错误代码 code， XMLHTTPRequest 对象实例
 request 以及自定义响应对象 response
+
+## 扩展接口
+为了使用户更加方便的使用 axios 发送请求，我们可以为所有支持请求方法扩展一些接口：
+1: axios.request(config)
+2: axios.get(url[, config])
+3: axios.delete(url[, config])
+4: axios.head(url[, config])
+5: axios.options(url[, config])
+6: axios.post(url[, data[, config]]) url必填，data、config选填
+7: axios.put(url[, data[, config]])
+8: axios.pat(url[, data[, config]])
+如果你用了这些方法，就不必在config中指定url、method、data这些属性了
+从需求上看，axios不再是单单一个方法，更像一个混合对象，本身是一个方法，又有很多方法属性，
+接下来我们来实现这个混合对象
+
+## 接口类型定义
+混合对象axios 本身就是一个函数，我们可基于类的方式去实现它的方法属性，然后把这个类原型属性和自身属性再拷贝到 axios 上。
+混合对象axios本身是个函数，我们再实现一个包括它属性方法的类，然后把这个类的原型属性和自身属性拷贝到 axios 上
