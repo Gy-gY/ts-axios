@@ -25,3 +25,9 @@ axios({
 })
 并且，在当我们传入的data为普通对象的时候， headers 如果没有配置 Content-Type属性，需要自动设置请求 header 的
 Content-Type 字段为： application/json;charset=utf-8
+
+## 获取响应数据
+我们发出请求，从网络接收服务端返回的数据，但代码层面没有做任何关于返回数据的处理，我们希望支持Promise
+axios({}).then(res => { console.log(res) })
+我们可以拿到res对象，我们希望该对象包括：服务端返回的数据data，http状态码status，状态消息statusText，响应头headers，
+请求配置对象config以及请求的XMLHTTPRequest对象实例 request 。

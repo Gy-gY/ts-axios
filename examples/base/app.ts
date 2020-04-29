@@ -100,3 +100,30 @@ axios({
   url: '/base/post',
   data: searchParams
 })
+
+// 下面测试Response
+axios({
+  method: 'post',
+  url: '/base/post',
+  data: {
+    a: 1,
+    b: 2
+  }
+}).then(res => {
+  // 返回的res里面的data是字符串类型 data:"{"a":1,"b":2}"
+  // 因为没有设置responseType，默认为空，返回字符串
+  console.log(res)
+})
+
+axios({
+  method: 'post',
+  url: '/base/post',
+  responseType: 'json',
+  data: {
+    a: 3,
+    b: 4
+  }
+}).then(res => {
+  // 返回的res里面的data是字符串类型 data: {a: 3, b: 4},因为设置了responseType: 'json',
+  console.log(res)
+})
