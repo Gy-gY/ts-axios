@@ -1,14 +1,16 @@
 // 入口文件
 import xhr from './xhr'
 import { buildURL } from './helpers/url'
-import { AxiosRequestConfig, AxiosPromise } from './types/index'
-import { transformRequest } from './helpers/data'
+import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types/index';
+import { transformRequest, transformResponse } from './helpers/data';
 import { processHeaders } from './helpers/headers'
 
 
 function axios(config: AxiosRequestConfig): AxiosPromise {
   processConfig(config)
-  return xhr(config)
+  return xhr(config).then(res => {
+    return transformResponseData(res)
+  })
 }
 
 function processConfig(config: AxiosRequestConfig): void {
@@ -33,6 +35,11 @@ function transformHeaders(config: AxiosRequestConfig): any {
   // 解构赋值默认值的写法
   const { headers = {}, data } = config
   return processHeaders(headers, data)
+}
+
+function transformResponseData(res: AxiosResponse): AxiosResponse {
+  res.data = transformResponse(res.data)
+  return res
 }
 
 export default axios

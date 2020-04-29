@@ -14,3 +14,15 @@ export function transformRequest(data: any): any {
   }
   return data
 }
+
+export function transformResponse(data: any): any {
+  if (typeof data === 'string') {
+    try {
+      // 万一data并不是json对象压缩成的字符串，就会转换失败，所以这里try了一下
+      data = JSON.parse(data)
+    } catch (e) {
+      // do nothing
+    }
+  }
+  return data
+}

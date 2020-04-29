@@ -31,3 +31,7 @@ Content-Type 字段为： application/json;charset=utf-8
 axios({}).then(res => { console.log(res) })
 我们可以拿到res对象，我们希望该对象包括：服务端返回的数据data，http状态码status，状态消息statusText，响应头headers，
 请求配置对象config以及请求的XMLHTTPRequest对象实例 request 。
+
+# 处理响应data
+如果没设置 responseType 的时候，默认为空，返回的是字符串，当服务端返回给我们的数据是字符串类型，我们可以尝试把他转换为JSON对象
+方便以后使用
