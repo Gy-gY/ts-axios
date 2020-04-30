@@ -1,7 +1,7 @@
 // 模块化出来的一个文件，实现请求方法
-import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types'
-import { parseHeaders } from './helpers/headers'
-import { createError } from './helpers/error';
+import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from '../types'
+import { parseHeaders } from '../helpers/headers'
+import { createError } from '../helpers/error';
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
@@ -14,8 +14,10 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     if (timeout) {
       request.timeout = timeout
     }
-    // true: 异步
-    request.open(method.toUpperCase(), url, true) // true 表示是否异步
+    // true: 异步，因为url在AxiosRequestConfig里面不是必传，万一是undefined，不符合string
+    // 类型“string | undefined”的参数不能赋给类型“string”的参数。不能将类型“undefined”分配给类型“string”。
+    // 所以 url 需要非空断言
+    request.open(method.toUpperCase(), url!, true)
 
     request.onreadystatechange = function handleLoad() {
       if (request.readyState !== 4) {

@@ -8,7 +8,9 @@ export type Method = 'get' | 'GET'
 | 'patch' | 'PATCH'
 
 export interface AxiosRequestConfig {
-  url?: string // 这里吧url修改为可选，是因为后面interface Axios url专门作为一个参数，所以这里不太必要
+  // 这里吧url修改为可选，是因为后面interface Axios url专门作为一个参数，所以这里不太必要
+  // 因为get、post、delete...都自带了url参数
+  url?: string
   method?: Method
   data?: any
   params?: any
@@ -52,6 +54,7 @@ export interface Axios {
 
 // 本来AxiosInstance是一个(config: AxiosRequestConfig): AxiosPromise 函数
 // 但现在让它继承 Axios，就既有了本身的函数类型，又拥有了 Axios 上所有的属性方法，是一个混合结构
+// AxiosInstance 这个接口本身就是这样一个函数(config: AxiosRequestConfig): AxiosPromise，然后再继承Axios
 export interface AxiosInstance extends Axios {
   (config: AxiosRequestConfig): AxiosPromise
 }

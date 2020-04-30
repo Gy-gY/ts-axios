@@ -1,12 +1,13 @@
+// 在原文件src/axios.ts的请求流程转移到之类，因为这也是一个很核心的流程
 // 入口文件
 import xhr from './xhr'
-import { buildURL } from './helpers/url'
-import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types/index';
-import { transformRequest, transformResponse } from './helpers/data';
-import { processHeaders } from './helpers/headers'
+import { buildURL } from '../helpers/url'
+import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from '../types/index';
+import { transformRequest, transformResponse } from '../helpers/data';
+import { processHeaders } from '../helpers/headers'
 
-
-function axios(config: AxiosRequestConfig): AxiosPromise {
+// 原src/axios.ts axios函数
+export default function dispatchRequest(config: AxiosRequestConfig): AxiosPromise {
   processConfig(config)
   return xhr(config).then(res => {
     return transformResponseData(res)
@@ -22,7 +23,10 @@ function processConfig(config: AxiosRequestConfig): void {
 
 function transformURL(config: AxiosRequestConfig): string {
   const { url, params } = config
-  return buildURL(url, params)
+  // url这里会报错，因为我们把AxiosRequestConfig中url设为可选了，就有undefined的可能，但undefined不是string类型
+  // 怎么解决？我们断言它不为空，后面加个! 非空断言操作符
+  // return buildURL(url, params)
+  return buildURL(url!, params)
 }
 // 上面函数是对config.url做了处理，下面对config.data做处理
 function transformRequestData(config: AxiosRequestConfig): any {
@@ -41,5 +45,3 @@ function transformResponseData(res: AxiosResponse): AxiosResponse {
   res.data = transformResponse(res.data)
   return res
 }
-
-export default axios
