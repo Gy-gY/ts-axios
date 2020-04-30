@@ -8,7 +8,7 @@ export type Method = 'get' | 'GET'
 | 'patch' | 'PATCH'
 
 export interface AxiosRequestConfig {
-  url: string
+  url?: string // 这里吧url修改为可选，是因为后面interface Axios url专门作为一个参数，所以这里不太必要
   method?: Method
   data?: any
   params?: any
@@ -36,4 +36,22 @@ export interface AxiosError extends Error {
   code?: string | null
   request?: any
   response?: AxiosResponse
+}
+
+// 混合对象axios本身是个函数，我们再实现一个包括它属性方法的类，然后把这个类的原型属性和自身属性拷贝到 axios 上
+export interface Axios {
+  request(confg: AxiosRequestConfig): AxiosPromise
+  get(url: string, confg?: AxiosRequestConfig): AxiosPromise
+  delete(url: string, config?: AxiosRequestConfig): AxiosPromise
+  head(url: string, config?: AxiosRequestConfig): AxiosPromise
+  options(url: string, config?: AxiosRequestConfig): AxiosPromise
+  post(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
+  put(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
+  patch(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
+}
+
+// 本来AxiosInstance是一个(config: AxiosRequestConfig): AxiosPromise 函数
+// 但现在让它继承 Axios，就既有了本身的函数类型，又拥有了 Axios 上所有的属性方法，是一个混合结构
+export interface AxiosInstance extends Axios {
+  (config: AxiosRequestConfig): AxiosPromise
 }
