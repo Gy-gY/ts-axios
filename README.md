@@ -68,3 +68,13 @@ request 以及自定义响应对象 response
 ## 接口类型定义
 混合对象axios 本身就是一个函数，我们可基于类的方式去实现它的方法属性，然后把这个类原型属性和自身属性再拷贝到 axios 上。
 混合对象axios本身是个函数，我们再实现一个包括它属性方法的类，然后把这个类的原型属性和自身属性拷贝到 axios 上
+
+## 混合对象实现
+混合对象实现思路简单，首先这个对象是个函数，其次这个对象要包括Axios类的所有的原型属性和实例类型。我们首先来实现一个辅助
+函数  extend
+export function extend<T, U>(to: T, from: U): T & U {
+  for (const key in from) {
+    (to as T & U)[key] = from[key] as any
+  }
+  return to as T & U
+}
